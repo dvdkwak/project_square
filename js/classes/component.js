@@ -27,25 +27,10 @@ function component(){
             if (this.right in keysDown){this.x += this.speed;}
         }
         this.y += this.velocitiy_y;
-        // alternative movement
-        // if(pressedKey == this.left){
-        //     this.x -= this.speed;
-        // }
-        // if(pressedKey == this.right){
-        //     this.x += this.speed;
-        // }
-        // if(pressedKey == this.down){
-        //     this.y += this.speed;
-        // }
-        // if(pressedKey == this.up){
-        //     this.y -= this.speed;
-        // }
     };
 
     //setting preferred keys
-    this.keys = function(up, down, left, right){
-        this.up = up;
-        this.down = down;
+    this.keys = function(left, right){
         this.right = right;
         this.left = left;
         this.hasKeys = true;
