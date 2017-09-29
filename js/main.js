@@ -2,7 +2,9 @@ function startGame() {
     keysDown = {};
     myGameArea.start();
     bot1 = new component();
-    bot1.create(30, 30, "red", 20, 100, 10);
+    floor = new component();
+    bot1.create(30, 30, "black", 20, 100, 10, 20);
+    floor.create(3000, 30, "black", 0, (window.innerHeight-30), 0, 0);
     bot1.keys(38, 40, 37, 39);
     document.addEventListener('keydown', function(e){
         pressedKey = e.keyCode;
@@ -17,5 +19,6 @@ function startGame() {
 
 function update(){
     myGameArea.clear();
-    bot1.update();
+    bot1.update(floor);
+    floor.update(bot1);
 }

@@ -1,25 +1,32 @@
 function component(){
-    this.create = function(width, height, color, x, y, speed){
+
+    //Object creation function
+    this.create = function(width, height, color, x, y, speed, gravity){
         this.width = width;
         this.height = height;
         this.x = x;
         this.y = y;
-        this.color = color;
         this.speed = speed;
+        this.velocitiy_y = gravity;
         this.ctx = myGameArea.context;
         this.ctx.fillStyle = color;
-        this.ctx.fillRect(this.x, this.y, this.width, this.height);
+        this.ctx.fillRect(x, y, width, height);
     };
-    this.update = function(){
+
+    //the update function to keep the object 'alive'
+    this.update = function(obj){
         this.mapControl();
         this.ctx = myGameArea.context;
         this.ctx.fillStyle = this.color;
         this.ctx.fillRect(this.x, this.y, this.width, this.height);
-        if (this.left in keysDown && !(this.up in keysDown) && !(this.down in keysDown)){this.x -= this.speed;}
-        if (this.right in keysDown && !(this.up in keysDown) && !(this.down in keysDown)){this.x += this.speed;}
-        if (this.up in keysDown){this.y -= this.speed;}
-        if (this.down in keysDown){this.y += this.speed;}
-
+        if(this.collisionCheck(obj)){
+            this.velocitiy_y = 0;
+        }
+        if(this.hasKeys){
+            if (this.left in keysDown){this.x -= this.speed;}
+            if (this.right in keysDown){this.x += this.speed;}
+        }
+        this.y += this.velocitiy_y;
         // alternative movement
         // if(pressedKey == this.left){
         //     this.x -= this.speed;
@@ -34,12 +41,17 @@ function component(){
         //     this.y -= this.speed;
         // }
     };
+
+    //setting preferred keys
     this.keys = function(up, down, left, right){
         this.up = up;
         this.down = down;
         this.right = right;
         this.left = left;
+        this.hasKeys = true;
     };
+
+    //mpControl function to prevent going off the map
     this.mapControl = function(){
         if(this.x >= (myGameArea.canvas.width - this.width/2)){
             this.x = 0;
@@ -54,7 +66,13 @@ function component(){
             this.y = 0;
         }
     };
-    this.collision = function(x, y, ox, oy){
 
+    //ground collision event
+    this.collisionCheck = function(obj){
+        if (this.x > obj.x + obj.width){return false;}
+        if (this.x + obj.width < obj.x){return false;}
+        if (this.y > obj.y + obj.height){return false;}
+        if (this.y + obj.height < obj.y){return false;}
+        return true;
     };
 }
