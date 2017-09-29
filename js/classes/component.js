@@ -1,12 +1,13 @@
-function component(){
+function component(width, height, color, x, y, speed, gravity){
 
     //Object creation function
-    this.create = function(width, height, color, x, y, speed, gravity){
+    this.create = function(){
         this.width = width;
         this.height = height;
         this.x = x;
         this.y = y;
         this.speed = speed;
+        this.gravity = gravity;
         this.velocitiy_y = gravity;
         this.ctx = myGameArea.context;
         this.ctx.fillStyle = color;
@@ -14,19 +15,25 @@ function component(){
     };
 
     //the update function to keep the object 'alive'
-    this.update = function(obj){
+    this.update = function(arr){
         this.mapControl();
         this.ctx = myGameArea.context;
         this.ctx.fillStyle = this.color;
         this.ctx.fillRect(this.x, this.y, this.width, this.height);
-        if(this.collisionCheck(obj)){
-            this.velocitiy_y = 0;
-        }
-        if(this.hasKeys){
-            if (this.left in keysDown){this.x -= this.speed;}
-            if (this.right in keysDown){this.x += this.speed;}
-        }
+        if(arr != ""){
+            for(i = 0; i < arr.length; i++) {
+                if (this.collisionCheck(arr[i])) {
+                    this.velocitiy_y = 0;
+                } else {
+                   this.velocitiy_y = this.gravity;
+                }
+            }
+            if(this.hasKeys){
+                if (this.left in keysDown){this.x -= this.speed;}
+                if (this.right in keysDown){this.x += this.speed;}
+            }
         this.y += this.velocitiy_y;
+        }
     };
 
     //setting preferred keys
@@ -55,9 +62,9 @@ function component(){
     //ground collision event
     this.collisionCheck = function(obj){
         if (this.x > obj.x + obj.width){return false;}
-        if (this.x + obj.width < obj.x){return false;}
+        if (this.x + this.width < obj.x){return false;}
         if (this.y > obj.y + obj.height){return false;}
-        if (this.y + obj.height < obj.y){return false;}
+        if (this.y + this.height < obj.y){return false;}
         return true;
     };
 }

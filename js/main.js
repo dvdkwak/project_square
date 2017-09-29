@@ -1,11 +1,17 @@
 function startGame() {
     keysDown = {};
     myGameArea.start();
-    bot1 = new component();
-    floor = new component();
-    bot1.create(30, 30, "black", 20, 100, 10, 20);
-    floor.create(3000, 30, "black", 0, (window.innerHeight-30), 0, 0);
-    bot1.keys(37, 39);
+    player = new component(30, 30, "black", 20, 100, 10, 20);
+    floor = new Array();
+    floor[0] = new component(500, 30, "black", 0, (window.innerHeight-30), 0, 0);
+    floor[1] = new component(500, 30, "black", 500, 500, 0, 0);
+    floor[2] = new component(500, 30, "black", 200, 100, 0, 0);
+    player.create();
+    floor[0].create();
+    floor[1].create();
+    floor[2].create();
+    console.log(floor);
+    player.keys(37, 39);
     document.addEventListener('keydown', function(e){
         pressedKey = e.keyCode;
         keysDown[e.keyCode] = true;
@@ -19,6 +25,8 @@ function startGame() {
 
 function update(){
     myGameArea.clear();
-    bot1.update(floor);
-    floor.update(bot1);
+    player.update(floor);
+    floor[0].update("");
+    floor[1].update("");
+    floor[2].update("");
 }
