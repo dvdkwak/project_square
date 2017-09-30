@@ -1,11 +1,11 @@
 function startGame() {
     keysDown = {};
     myGameArea.start();
-    player = new component(30, 30, "black", 20, 100, 10, 20);
+    player = new component(30, 30, "black", 20, 100, 10, 20, "player");
     floor = new Array();
-    floor[0] = new component(500, 30, "black", 0, (window.innerHeight-30), 0, 0);
-    floor[1] = new component(500, 30, "black", 500, 500, 0, 0);
-    floor[2] = new component(500, 30, "black", 200, 100, 0, 0);
+    floor[0] = new component(500, 30, "black", 0, (window.innerHeight-30), 0, 0, "test 1");
+    floor[1] = new component(500, 30, "black", 500, 500, 0, 0, "test 2");
+    floor[2] = new component(500, 30, "black", 200, 100, 0, 0, "test3");
     player.create();
     floor[0].create();
     floor[1].create();

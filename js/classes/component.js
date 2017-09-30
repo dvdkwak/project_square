@@ -1,7 +1,8 @@
-function component(width, height, color, x, y, speed, gravity){
+function component(width, height, color, x, y, speed, gravity, name){
 
     //Object creation function
     this.create = function(){
+        this.name = name;
         this.width = width;
         this.height = height;
         this.x = x;
@@ -9,6 +10,7 @@ function component(width, height, color, x, y, speed, gravity){
         this.speed = speed;
         this.gravity = gravity;
         this.velocitiy_y = gravity;
+        this.collided = Array();
         this.ctx = myGameArea.context;
         this.ctx.fillStyle = color;
         this.ctx.fillRect(x, y, width, height);
@@ -23,10 +25,15 @@ function component(width, height, color, x, y, speed, gravity){
         if(arr != ""){
             for(i = 0; i < arr.length; i++) {
                 if (this.collisionCheck(arr[i])) {
-                    this.velocitiy_y = 0;
-                } else {
-                   this.velocitiy_y = this.gravity;
+                    this.collided[i] = true;
+                }else{
+                    this.collided[i] = false;
                 }
+            }
+            if(this.collided.includes(true)){
+                this.velocitiy_y = 0;
+            }else{
+                this.velocitiy_y = this.gravity;
             }
             if(this.hasKeys){
                 if (this.left in keysDown){this.x -= this.speed;}
