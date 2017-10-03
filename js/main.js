@@ -1,17 +1,17 @@
 function startGame() {
     keysDown = {};
     myGameArea.start();
-    player = new component(30, 30, "black", 20, 100, 10, 20, "player");
+    player = new component(30, 30, "black", 20, 100, 10, 20);
     floor = new Array();
-    floor[0] = new component(500, 30, "black", 0, (window.innerHeight-30), 0, 0, "test 1");
-    floor[1] = new component(500, 30, "black", 500, 500, 0, 0, "test 2");
-    floor[2] = new component(500, 30, "black", 200, 100, 0, 0, "test3");
+    floor[0] = new component(500, 30, "black", 0, (window.innerHeight-30), 0, 0);
+    floor[1] = new component(500, 30, "black", 500, 500, 0, 0);
+    floor[2] = new component(500, 30, "black", 200, 100, 0, 0);
     player.create();
     floor[0].create();
     floor[1].create();
     floor[2].create();
     console.log(floor);
-    player.keys(37, 39);
+    player.keys(37, 39, 38);
     document.addEventListener('keydown', function(e){
         pressedKey = e.keyCode;
         keysDown[e.keyCode] = true;
